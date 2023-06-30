@@ -15,7 +15,6 @@ const SetRemainder = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Create an object with the form data
         const formData = {
             date,
             subject,
@@ -26,10 +25,22 @@ const SetRemainder = () => {
             recurr,
         };
 
-        // Store the form data in localStorage
-        localStorage.setItem('formData', JSON.stringify(formData));
+        // Retrieve the existing form data array from localStorage
+        const existingFormData = localStorage.getItem('formDataArray');
 
-        // Clear the form fields
+        let formDataArray = [];
+
+        if (existingFormData) {
+            // Parse the existing form data array from localStorage
+            formDataArray = JSON.parse(existingFormData);
+        }
+
+        // Add the new form data to the array
+        formDataArray.push(formData);
+
+        // Store the updated form data array in localStorage
+        localStorage.setItem('formDataArray', JSON.stringify(formDataArray));
+
         setDate('');
         setSubject('none');
         setDescription('');
@@ -38,7 +49,6 @@ const SetRemainder = () => {
         setSmsNo('');
         setRecurr('');
     };
-
     return (
         <form onSubmit={handleSubmit}>
             <div>
